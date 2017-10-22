@@ -1,5 +1,6 @@
 .gradle
 build/
+out/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -15,3 +16,6 @@ gradle-app.setting
 .idea/workspace.xml
 .idea/workspace.xml
 .idea/workspace.xml
+.idea/workspace.xml
+.idea/workspace.xml
+start/out/production/classes/MFP.class
