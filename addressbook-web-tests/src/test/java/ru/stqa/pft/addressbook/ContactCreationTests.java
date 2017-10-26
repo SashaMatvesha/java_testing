@@ -26,7 +26,7 @@ public class ContactCreationTests {
   }
 
   @Test
-  public void ContactCreationTests() {
+  public void testContactCreation() {
     initUserCreation();
     fillContactForm(new ContactData("Ivan", "I.", "Ivanov", "adress", "e-mail"));
     submitContactCreation();
