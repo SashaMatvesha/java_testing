@@ -1,23 +1,57 @@
 package ru.stqa.pft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.Type;
 
-@XStreamAlias("group")
+import javax.persistence.*;
+
+@XStreamAlias("contact")
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
   @XStreamOmitField
+  @Id
+  @Column(name = "id")
   private  int id = Integer.MAX_VALUE;
+
+  @Column(name = "firstname")
   private String firstName;
+  @Transient
   private String middleName;
+  @Column(name = "lastname")
   private String lastName;
+  @Transient
   private String address;
+  @Transient
   private String email;
+  @Column(name = "home")
+  @Type(type = "text")
   private String homeNumber;
+  @Column(name = "mobile")
+  @Type(type = "text")
   private String mobileNumber;
+
+  @Override
+  public String toString() {
+    return "ContactData{" +
+            "id=" + id +
+            ", firstName='" + firstName + '\'' +
+            ", lastName='" + lastName + '\'' +
+            '}';
+  }
+
+  @Column(name = "work")
+  @Type(type = "text")
   private String workNumber;
+  @Transient
   private String allNumbers;
+  @Transient
   private String allEmails;
+  @Transient
   private String email1;
+  @Transient
   private String email2;
 
   public String getEmail1() {
@@ -163,14 +197,5 @@ public class ContactData {
     return email;
   }
 
-
-  @Override
-  public String toString() {
-    return "ContactData{" +
-            "id=" + id +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            '}';
-  }
 
 }

@@ -14,6 +14,9 @@ dependencies {
     compile 'com.google.guava:guava:23.4-jre'
     compile 'com.beust:jcommander:1.72'
     compile 'com.thoughtworks.xstream:xstream-distribution:1.4.10'
+    compile 'mysql:mysql-connector-java:5.1.45'
+    compile 'org.hibernate:hibernate-core:5.2.12.Final'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
 }
 
 task testGroups(type: Test) {

@@ -45,12 +45,12 @@ public class ContactModificationTests extends TestBase {
 
   @Test(dataProvider = "validContacts")
   public void testContactModification(ContactData contact) {
-    Contacts before = app.contact().all();
+    Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     contact.withId(modifiedContact.getId());
     app.contact().modify(contact);
     assertThat(app.contact().count(),equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
 
