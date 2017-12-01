@@ -6,6 +6,8 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @XStreamAlias("contact")
 @Entity
@@ -15,9 +17,42 @@ public class ContactData {
   @Id
   @Column(name = "id")
   private  int id = Integer.MAX_VALUE;
-
   @Column(name = "firstname")
   private String firstName;
+  @Transient
+  private String middleName;
+  @Column(name = "lastname")
+  private String lastName;
+  @Transient
+  private String address;
+  @Transient
+  private String email;
+  @Column(name = "home")
+  @Type(type = "text")
+  private String homeNumber;
+  @Column(name = "mobile")
+  @Type(type = "text")
+  private String mobileNumber;
+  @Column(name = "work")
+  @Type(type = "text")
+  private String workNumber;
+  @Transient
+  private String allNumbers;
+  @Transient
+  private String allEmails;
+  @Transient
+  private String email1;
+  @Transient
+  private String email2;
+
+  public Groups getGroups() {
+    return new Groups(groups);
+  }
+
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
+          inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
   @Override
   public boolean equals(Object o) {
@@ -39,21 +74,6 @@ public class ContactData {
     return result;
   }
 
-  @Transient
-
-  private String middleName;
-  @Column(name = "lastname")
-  private String lastName;
-  @Transient
-  private String address;
-  @Transient
-  private String email;
-  @Column(name = "home")
-  @Type(type = "text")
-  private String homeNumber;
-  @Column(name = "mobile")
-  @Type(type = "text")
-  private String mobileNumber;
 
   @Override
   public String toString() {
@@ -64,17 +84,12 @@ public class ContactData {
             '}';
   }
 
-  @Column(name = "work")
-  @Type(type = "text")
-  private String workNumber;
-  @Transient
-  private String allNumbers;
-  @Transient
-  private String allEmails;
-  @Transient
-  private String email1;
-  @Transient
-  private String email2;
+
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return  this;
+  }
 
   public String getEmail1() {
     return email1;
