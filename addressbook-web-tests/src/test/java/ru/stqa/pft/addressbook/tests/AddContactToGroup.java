@@ -51,7 +51,7 @@ public class AddContactToGroup {
       ContactData addedContact = before.iterator().next();
       GroupData addedGroup = groups.iterator().next();
       contact.withId(addedContact.getId());
-      app.contact().inGroup(addedGroup);
+      //app.contact().inGroup(addedGroup);
       assertThat(app.contact().count(),equalTo(before.size()));
       Contacts after = app.db().contacts();
     }
