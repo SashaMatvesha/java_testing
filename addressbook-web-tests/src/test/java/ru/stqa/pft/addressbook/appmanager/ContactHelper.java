@@ -27,6 +27,14 @@ public class ContactHelper extends HelperBase {
     type(By.name("email"),contactData.getEmail());
   }
 
+  public void fillContactGroups(ContactData contactData, GroupData groupData) {
+    returnToHomePage();
+    selectContactById(contactData.getId());
+    click(By.xpath("//select[@name='to_group']/option[@value='" + groupData.getId() + "']"));
+    click(By.name("add"));
+    returnToHomePage();
+  }
+
   public void initUserCreation() {
     click(By.linkText("add new"));
   }
@@ -55,6 +63,13 @@ public class ContactHelper extends HelperBase {
     returnToHomePage();
   }
 
+  public void addGroup(ContactData contact, GroupData group) {
+    fillContactGroups(contact,group);
+    contactCache = null;
+    submitContactModification();
+    returnToHomePage();
+  }
+
   public void modificationContactById(int id) {
     click(By.xpath("//td[@class='center']/a[@href='edit.php?id=" + id +"']"));
     //tr[@class='odd']
@@ -64,12 +79,13 @@ public class ContactHelper extends HelperBase {
     click(By.name("update"));
   }
 
-  public void create(ContactData contact) {
+  public ContactData create(ContactData contact) {
     initUserCreation();
     fillContactForm(contact);
     submitContactCreation();
     contactCache = null;
     returnToHomePage();
+    return contact;
   }
 
   public boolean isThereAnyContact() {

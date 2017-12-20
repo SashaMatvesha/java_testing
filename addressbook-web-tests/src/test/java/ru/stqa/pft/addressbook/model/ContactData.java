@@ -44,15 +44,16 @@ public class ContactData {
   private String email1;
   @Transient
   private String email2;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
+          inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
   public Groups getGroups() {
     return new Groups(groups);
   }
 
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "address_in_groups", joinColumns = @JoinColumn(name = "id"),
-          inverseJoinColumns = @JoinColumn(name = "group_id"))
-  private Set<GroupData> groups = new HashSet<GroupData>();
+
 
   @Override
   public boolean equals(Object o) {
