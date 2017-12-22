@@ -58,22 +58,23 @@ public class AddContactToGroup extends TestBase{
       ContactData modifiedContact = allContacts.iterator().next();
       GroupData addedGroup = allGroups.iterator().next();
       Groups beforeGroups = modifiedContact.getGroups();
-
-      if(modifiedContact.getGroups().size()!= app.db().groups().size())
-      {
-        for(GroupData g:modifiedContact.getGroups()) {
-          if (!modifiedContact.getGroups().contains(g)) {
-            addedGroup = g;
-            break;
-          }
-        }
-      }else {
+      if(modifiedContact.getGroups().size()==0){
         app.group().create(addedGroup.withName("AddedGroup"));
+      }else {
+        if (modifiedContact.getGroups().size() != app.db().groups().size()) {
+          for (GroupData g : modifiedContact.getGroups()) {
+            if (!modifiedContact.getGroups().contains(g)) {
+              addedGroup = g;
+              break;
+            }
+          }
+        } else {
+          app.group().create(addedGroup.withName("AddedGroup"));
+        }
       }
-    System.out.println(addedGroup);
+
       app.contact().fillContactGroups(modifiedContact,addedGroup);
       Groups afterGroups = modifiedContact.getGroups();
-    System.out.println("allgroups after added"+afterGroups);
       assertThat(beforeGroups.withAdded(addedGroup).size(),equalTo(afterGroups.size()));
       assertThat(beforeGroups.withAdded(addedGroup),equalTo(afterGroups));
     }

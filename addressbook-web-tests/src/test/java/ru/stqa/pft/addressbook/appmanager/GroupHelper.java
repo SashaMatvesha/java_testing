@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
@@ -50,6 +51,22 @@ public class GroupHelper extends HelperBase {
 
   public void submitGroupModification() {
     click(By.name("update"));
+  }
+
+  public void  deleteContactFromGroup(GroupData group, ContactData contact){
+    goToHomePage();
+    click(By.xpath("//select[@name='group']/option[@value='" + group.getId() + "']"));
+    click(By.cssSelector("input[value='" + contact.getId() +  "']"));
+    click(By.xpath("//input[@name='remove']"));
+    goToHomePage();
+    click(By.xpath("//select[@name='group']/option[@value]"));
+  }
+
+  public void goToHomePage() {
+    if (isElementExist(By.id("maintable"))){
+      return;
+    }
+    click(By.linkText("home"));
   }
 
   public boolean isThereAnyGroup() {
